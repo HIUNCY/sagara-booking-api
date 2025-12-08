@@ -44,6 +44,10 @@ func main() {
 	app.Use(logger.New())
 	app.Use(cors.New())
 
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.SendString("Sagara Backend Test API is Running!")
+	})
+
 	api := app.Group("/api")
 
 	// AUTH ROUTES
@@ -67,7 +71,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "3000"
+		port = "8080"
 	}
 
 	log.Fatal(app.Listen(":" + port))
