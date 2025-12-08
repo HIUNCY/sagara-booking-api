@@ -65,10 +65,5 @@ func main() {
 	bookings.Post("/", bookingHandler.Create)
 	api.Post("/payments", middleware.Protected, bookingHandler.Pay)
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "3000"
-	}
-
 	log.Fatal(app.Listen(":" + port))
 }
