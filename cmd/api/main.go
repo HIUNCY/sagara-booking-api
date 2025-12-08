@@ -67,7 +67,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "3000" // Default ke 3000 jika di local
+		port = "3000"
 	}
 
 	log.Fatal(app.Listen(":" + port))
