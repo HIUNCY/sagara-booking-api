@@ -7,6 +7,7 @@ import (
 	"github.com/HIUNCY/sagara-booking-api/internal/repository"
 	"github.com/HIUNCY/sagara-booking-api/internal/service"
 	"github.com/HIUNCY/sagara-booking-api/pkg/database"
+	"github.com/HIUNCY/sagara-booking-api/pkg/middleware"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -28,6 +29,11 @@ func main() {
 	userService := service.NewUserService(userRepo)
 	userHandler := handler.NewUserHandler(userService)
 
+	// FIELD FEATURE
+	fieldRepo := repository.NewFieldRepository(db)
+	fieldService := service.NewFieldService(fieldRepo)
+	fieldHandler := handler.NewFieldHandler(fieldService)
+
 	app := fiber.New()
 	app.Use(logger.New())
 	app.Use(cors.New())
@@ -37,6 +43,14 @@ func main() {
 	// AUTH ROUTES
 	api.Post("/register", userHandler.Register)
 	api.Post("/login", userHandler.Login)
-	
+
+	// FIELD ROUTES
+	fields := api.Group("/fields", middleware.Protected)
+	fields.Get("/", fieldHandler.GetAll)
+	fields.Get("/:id", fieldHandler.GetByID)
+	fields.Post("/", middleware.AdminOnly, fieldHandler.Create)
+	fields.Put("/:id", middleware.AdminOnly, fieldHandler.Update)
+	fields.Delete("/:id", middleware.AdminOnly, fieldHandler.Delete)
+
 	log.Fatal(app.Listen(":3000"))
 }
