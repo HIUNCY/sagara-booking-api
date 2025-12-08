@@ -34,6 +34,11 @@ func main() {
 	fieldService := service.NewFieldService(fieldRepo)
 	fieldHandler := handler.NewFieldHandler(fieldService)
 
+	// BOOKING FEATURE
+	bookingRepo := repository.NewBookingRepository(db)
+	bookingService := service.NewBookingService(bookingRepo)
+	bookingHandler := handler.NewBookingHandler(bookingService)
+
 	app := fiber.New()
 	app.Use(logger.New())
 	app.Use(cors.New())
@@ -51,6 +56,13 @@ func main() {
 	fields.Post("/", middleware.AdminOnly, fieldHandler.Create)
 	fields.Put("/:id", middleware.AdminOnly, fieldHandler.Update)
 	fields.Delete("/:id", middleware.AdminOnly, fieldHandler.Delete)
+
+	// BOOKING AND PAYMENT ROUTES
+	bookings := api.Group("/bookings", middleware.Protected)
+	bookings.Get("/", bookingHandler.GetAll)
+	bookings.Get("/:id", bookingHandler.GetByID)
+	bookings.Post("/", bookingHandler.Create)
+	api.Post("/payments", middleware.Protected, bookingHandler.Pay)
 
 	log.Fatal(app.Listen(":3000"))
 }

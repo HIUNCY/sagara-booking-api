@@ -24,9 +24,9 @@ type Field struct {
 type Booking struct {
 	gorm.Model
 	FieldID   uint      `json:"field_id"`
-	Field     Field     `json:"field" gorm:"foreignKey:FieldID"`
+	Field     *Field    `json:"field,omitempty" gorm:"foreignKey:FieldID"`
 	UserID    uint      `json:"user_id"`
-	User      User      `json:"user" gorm:"foreignKey:UserID"`
+	User      *User     `json:"user,omitempty" gorm:"foreignKey:UserID"`
 	StartTime time.Time `json:"start_time"`
 	EndTime   time.Time `json:"end_time"`
 	Status    string    `json:"status" gorm:"default:'pending'"`
