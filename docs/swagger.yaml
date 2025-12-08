@@ -1,0 +1,404 @@
+basePath: /api
+definitions:
+  port.BookingRequest:
+    properties:
+      end_time:
+        type: string
+      field_id:
+        type: integer
+      start_time:
+        type: string
+    type: object
+  port.CreateFieldRequest:
+    properties:
+      location:
+        type: string
+      name:
+        type: string
+      price_per_hour:
+        type: integer
+    type: object
+  port.DataResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+    type: object
+  port.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  port.FieldResponse:
+    properties:
+      ID:
+        type: integer
+      location:
+        type: string
+      name:
+        type: string
+      price_per_hour:
+        type: integer
+    type: object
+  port.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  port.LoginResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  port.MessageResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  port.RegisterRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      role:
+        type: string
+    type: object
+host: sagara-booking-api-f264e78236b6.herokuapp.com
+info:
+  contact:
+    email: support@sagara.id
+    name: API Support
+  description: Backend Developer Take Home Test - Booking System.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Sagara Booking API
+  version: "1.0"
+paths:
+  /bookings:
+    get:
+      description: Retrieve a list of all bookings (Admin/User).
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/port.DataResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get all bookings history
+      tags:
+      - Bookings
+    post:
+      consumes:
+      - application/json
+      description: Book a field. Checks for schedule overlap.
+      parameters:
+      - description: Booking Data
+        in: body
+        name: booking
+        required: true
+        schema:
+          $ref: '#/definitions/port.BookingRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/port.DataResponse'
+        "400":
+          description: Invalid Input / Overlap
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create a new booking
+      tags:
+      - Bookings
+  /bookings/{id}:
+    get:
+      description: Get detailed information about a specific booking by ID.
+      parameters:
+      - description: Booking ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/port.DataResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get booking details
+      tags:
+      - Bookings
+  /fields:
+    get:
+      description: Retrieve a list of all available sports fields.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/port.FieldResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get All Fields
+      tags:
+      - Fields
+    post:
+      consumes:
+      - application/json
+      description: Add a new sports field to the system. Requires Admin role.
+      parameters:
+      - description: Field Data
+        in: body
+        name: field
+        required: true
+        schema:
+          $ref: '#/definitions/port.CreateFieldRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/port.MessageResponse'
+        "400":
+          description: Invalid Input
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+        "403":
+          description: 'Forbidden: Admin only'
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create New Field (Admin Only)
+      tags:
+      - Fields
+  /fields/{id}:
+    delete:
+      description: Permanently remove a field. Requires Admin role.
+      parameters:
+      - description: Field ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/port.MessageResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete Field (Admin Only)
+      tags:
+      - Fields
+    get:
+      description: Get detailed information of a specific field by ID.
+      parameters:
+      - description: Field ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/port.FieldResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get Field Detail
+      tags:
+      - Fields
+    put:
+      consumes:
+      - application/json
+      description: Update existing field data. Requires Admin role.
+      parameters:
+      - description: Field ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated Data
+        in: body
+        name: field
+        required: true
+        schema:
+          $ref: '#/definitions/port.CreateFieldRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/port.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update Field (Admin Only)
+      tags:
+      - Fields
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user and return JWT token.
+      parameters:
+      - description: Login Credentials
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/port.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/port.LoginResponse'
+        "400":
+          description: Invalid Input
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+        "401":
+          description: Invalid Email or Password
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+      summary: User Login
+      tags:
+      - Auth
+  /payments:
+    post:
+      consumes:
+      - application/json
+      description: Change booking status from pending to paid.
+      parameters:
+      - description: 'JSON: {booking_id: 1}'
+        in: body
+        name: payment
+        required: true
+        schema:
+          properties:
+            booking_id:
+              type: integer
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/port.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Pay for a booking (Mock Payment)
+      tags:
+      - Payments
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user account. Role can be 'user' or 'admin'.
+      parameters:
+      - description: User Data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/port.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: 'message: User created successfully'
+          schema:
+            $ref: '#/definitions/port.MessageResponse'
+        "400":
+          description: Invalid Input
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/port.ErrorResponse'
+      summary: Register New User
+      tags:
+      - Auth
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

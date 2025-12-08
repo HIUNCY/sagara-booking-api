@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	_ "github.com/HIUNCY/sagara-booking-api/docs"
 	"github.com/HIUNCY/sagara-booking-api/internal/handler"
 	"github.com/HIUNCY/sagara-booking-api/internal/repository"
 	"github.com/HIUNCY/sagara-booking-api/internal/service"
@@ -12,9 +13,23 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	swagger "github.com/gofiber/swagger"
 	"github.com/joho/godotenv"
 )
 
+// @title           Sagara Booking API
+// @version         1.0
+// @description     Backend Developer Take Home Test - Booking System.
+// @termsOfService  http://swagger.io/terms/
+// @contact.name   API Support
+// @contact.email  support@sagara.id
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+// @host            sagara-booking-api-f264e78236b6.herokuapp.com
+// @BasePath        /api
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
 func main() {
 	if err := godotenv.Load(); err != nil {
 		log.Println("Warning: .env file not found, relying on Heroku Config Vars.")
@@ -47,6 +62,11 @@ func main() {
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Sagara Backend Test API is Running!")
 	})
+
+	// SWAGGER ROUTES
+	app.Get("/swagger/*", swagger.New(swagger.Config{
+		URL: "/swagger/doc.json",
+	}))
 
 	api := app.Group("/api")
 

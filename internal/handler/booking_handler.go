@@ -15,6 +15,18 @@ func NewBookingHandler(service port.BookingService) *BookingHandler {
 	return &BookingHandler{service: service}
 }
 
+// CreateBooking godoc
+// @Summary      Create a new booking
+// @Description  Book a field. Checks for schedule overlap.
+// @Tags         Bookings
+// @Accept       json
+// @Produce      json
+// @Security     BearerAuth
+// @Param        booking body port.BookingRequest true "Booking Data"
+// @Success      201 {object} port.DataResponse
+// @Failure      400 {object} port.ErrorResponse "Invalid Input / Overlap"
+// @Failure      401 {object} port.ErrorResponse "Unauthorized"
+// @Router       /bookings [post]
 func (h *BookingHandler) Create(c *fiber.Ctx) error {
 	userIDFloat, ok := c.Locals("user_id").(float64)
 	if !ok {
@@ -38,6 +50,15 @@ func (h *BookingHandler) Create(c *fiber.Ctx) error {
 	})
 }
 
+// GetAllBookings godoc
+// @Summary      Get all bookings history
+// @Description  Retrieve a list of all bookings (Admin/User).
+// @Tags         Bookings
+// @Produce      json
+// @Security     BearerAuth
+// @Success      200 {object} port.DataResponse
+// @Failure      500 {object} port.ErrorResponse
+// @Router       /bookings [get]
 func (h *BookingHandler) GetAll(c *fiber.Ctx) error {
 	bookings, err := h.service.GetAllBookings()
 	if err != nil {
@@ -49,6 +70,16 @@ func (h *BookingHandler) GetAll(c *fiber.Ctx) error {
 	})
 }
 
+// GetBookingByID godoc
+// @Summary      Get booking details
+// @Description  Get detailed information about a specific booking by ID.
+// @Tags         Bookings
+// @Produce      json
+// @Security     BearerAuth
+// @Param        id path int true "Booking ID"
+// @Success      200 {object} port.DataResponse
+// @Failure      404 {object} port.ErrorResponse
+// @Router       /bookings/{id} [get]
 func (h *BookingHandler) GetByID(c *fiber.Ctx) error {
 	id, _ := strconv.Atoi(c.Params("id"))
 
@@ -63,6 +94,17 @@ func (h *BookingHandler) GetByID(c *fiber.Ctx) error {
 	})
 }
 
+// PayBooking godoc
+// @Summary      Pay for a booking (Mock Payment)
+// @Description  Change booking status from pending to paid.
+// @Tags         Payments
+// @Accept       json
+// @Produce      json
+// @Security     BearerAuth
+// @Param        payment body object{booking_id=int} true "JSON: {booking_id: 1}"
+// @Success      200 {object} port.MessageResponse
+// @Failure      400 {object} port.ErrorResponse
+// @Router       /payments [post]
 func (h *BookingHandler) Pay(c *fiber.Ctx) error {
 	var req struct {
 		BookingID uint `json:"booking_id"`

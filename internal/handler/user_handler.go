@@ -13,6 +13,17 @@ func NewUserHandler(service port.UserService) *UserHandler {
 	return &UserHandler{service: service}
 }
 
+// Register godoc
+// @Summary      Register New User
+// @Description  Create a new user account. Role can be 'user' or 'admin'.
+// @Tags         Auth
+// @Accept       json
+// @Produce      json
+// @Param        user body port.RegisterRequest true "User Data"
+// @Success      201 {object} port.MessageResponse "message: User created successfully"
+// @Failure      400 {object} port.ErrorResponse "Invalid Input"
+// @Failure      500 {object} port.ErrorResponse "Internal Server Error"
+// @Router       /register [post]
 func (h *UserHandler) Register(c *fiber.Ctx) error {
 	var req port.RegisterRequest
 	if err := c.BodyParser(&req); err != nil {
@@ -26,6 +37,17 @@ func (h *UserHandler) Register(c *fiber.Ctx) error {
 	return c.Status(201).JSON(fiber.Map{"message": "User created successfully"})
 }
 
+// Login godoc
+// @Summary      User Login
+// @Description  Authenticate user and return JWT token.
+// @Tags         Auth
+// @Accept       json
+// @Produce      json
+// @Param        credentials body port.LoginRequest true "Login Credentials"
+// @Success      200 {object} port.LoginResponse
+// @Failure      400 {object} port.ErrorResponse "Invalid Input"
+// @Failure      401 {object} port.ErrorResponse "Invalid Email or Password"
+// @Router       /login [post]
 func (h *UserHandler) Login(c *fiber.Ctx) error {
 	var req port.LoginRequest
 	if err := c.BodyParser(&req); err != nil {
