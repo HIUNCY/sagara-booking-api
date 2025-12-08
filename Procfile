@@ -1,1 +1,1 @@
-web: sagara-booking-api
+web: api

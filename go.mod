@@ -1,3 +1,4 @@
+// +heroku install ./cmd/...
 module github.com/HIUNCY/sagara-booking-api
 
 go 1.25.0
