@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"os"
 
 	"github.com/HIUNCY/sagara-booking-api/internal/handler"
 	"github.com/HIUNCY/sagara-booking-api/internal/repository"
@@ -65,5 +64,5 @@ func main() {
 	bookings.Post("/", bookingHandler.Create)
 	api.Post("/payments", middleware.Protected, bookingHandler.Pay)
 
-	log.Fatal(app.Listen(":" + port))
+	log.Fatal(app.Listen(":8080"))
 }
