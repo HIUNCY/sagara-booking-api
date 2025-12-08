@@ -3,8 +3,12 @@ package main
 import (
 	"log"
 
+	"github.com/HIUNCY/sagara-booking-api/internal/handler"
+	"github.com/HIUNCY/sagara-booking-api/internal/repository"
+	"github.com/HIUNCY/sagara-booking-api/internal/service"
 	"github.com/HIUNCY/sagara-booking-api/pkg/database"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/joho/godotenv"
 )
@@ -18,14 +22,21 @@ func main() {
 	if err != nil {
 		log.Fatalf("Database error: %v", err)
 	}
-	_ = db
+
+	// USER FEATURE
+	userRepo := repository.NewUserRepository(db)
+	userService := service.NewUserService(userRepo)
+	userHandler := handler.NewUserHandler(userService)
 
 	app := fiber.New()
 	app.Use(logger.New())
+	app.Use(cors.New())
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Sagara Clean Architecture API is Ready!")
-	})
+	api := app.Group("/api")
 
+	// AUTH ROUTES
+	api.Post("/register", userHandler.Register)
+	api.Post("/login", userHandler.Login)
+	
 	log.Fatal(app.Listen(":3000"))
 }
