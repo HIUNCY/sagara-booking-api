@@ -1,0 +1,369 @@
+{
+	"info": {
+		"_postman_id": "ecf98ce0-e0c1-47f2-8d21-68d53654facb",
+		"name": "Sagara Booking API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47633702",
+		"_collection_link": "https://hiuncy-5854144.postman.co/workspace/HIUNCY's-Workspace~d0264228-8f74-4092-8b09-c56681cd172f/collection/47633702-ecf98ce0-e0c1-47f2-8d21-68d53654facb?action=share&source=collection_link&creator=47633702"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"User Test\",\r\n    \"email\": \"user@gmail.com\",\r\n    \"password\": \"user123\",\r\n    \"role\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://sagara-booking-api-f264e78236b6.herokuapp.com/api/register",
+							"protocol": "https",
+							"host": [
+								"sagara-booking-api-f264e78236b6",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@sagara.id\",\r\n    \"password\": \"admin123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://sagara-booking-api-f264e78236b6.herokuapp.com/api/login",
+							"protocol": "https",
+							"host": [
+								"sagara-booking-api-f264e78236b6",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Field",
+			"item": [
+				{
+					"name": "Create Field",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjU0NjI3NjIsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOjF9.YRzRqv7A5VZbPhNZHlUBy8hkYvZCNioxsDkAWBD4f2k",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Lapangan Futsal A\",\r\n    \"price_per_hour\": 150000,\r\n    \"location\": \"Jl. in dulu aja\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://sagara-booking-api-f264e78236b6.herokuapp.com/api/fields",
+							"protocol": "https",
+							"host": [
+								"sagara-booking-api-f264e78236b6",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"fields"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Field",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjU0NjI3NjIsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOjF9.YRzRqv7A5VZbPhNZHlUBy8hkYvZCNioxsDkAWBD4f2k",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Lapangan Futsal B\",\r\n    \"price_per_hour\": 180000,\r\n    \"location\": \"Jl. in dulu ajah\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://sagara-booking-api-f264e78236b6.herokuapp.com/api/fields/1",
+							"protocol": "https",
+							"host": [
+								"sagara-booking-api-f264e78236b6",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"fields",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Fields",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjU0NjI3NjIsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOjF9.YRzRqv7A5VZbPhNZHlUBy8hkYvZCNioxsDkAWBD4f2k",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://sagara-booking-api-f264e78236b6.herokuapp.com/api/fields",
+							"protocol": "https",
+							"host": [
+								"sagara-booking-api-f264e78236b6",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"fields"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Field By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjU0NjI3NjIsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOjF9.YRzRqv7A5VZbPhNZHlUBy8hkYvZCNioxsDkAWBD4f2k",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://sagara-booking-api-f264e78236b6.herokuapp.com/api/fields/1",
+							"protocol": "https",
+							"host": [
+								"sagara-booking-api-f264e78236b6",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"fields",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Field",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjU0NjI3NjIsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOjF9.YRzRqv7A5VZbPhNZHlUBy8hkYvZCNioxsDkAWBD4f2k",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://sagara-booking-api-f264e78236b6.herokuapp.com/api/fields/1",
+							"protocol": "https",
+							"host": [
+								"sagara-booking-api-f264e78236b6",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"fields",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "Create Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjU0NjM5NjcsInJvbGUiOiJ1c2VyIiwidXNlcl9pZCI6Mn0.52MWTM7DnouukIVwtN6BXbFlv9IS8J-gnVQKnX7Qkm0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"field_id\": 1,\r\n    \"start_time\": \"2025-10-25T10:00:00Z\",\r\n    \"end_time\": \"2025-10-25T12:00:00Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://sagara-booking-api-f264e78236b6.herokuapp.com/api/bookings",
+							"protocol": "https",
+							"host": [
+								"sagara-booking-api-f264e78236b6",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Bookings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjU0NjI3NjIsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOjF9.YRzRqv7A5VZbPhNZHlUBy8hkYvZCNioxsDkAWBD4f2k",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://sagara-booking-api-f264e78236b6.herokuapp.com/api/bookings",
+							"protocol": "https",
+							"host": [
+								"sagara-booking-api-f264e78236b6",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjU0NjI3NjIsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOjF9.YRzRqv7A5VZbPhNZHlUBy8hkYvZCNioxsDkAWBD4f2k",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://sagara-booking-api-f264e78236b6.herokuapp.com/api/bookings/1",
+							"protocol": "https",
+							"host": [
+								"sagara-booking-api-f264e78236b6",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"bookings",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pay Bookings",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjU0NjM5NjcsInJvbGUiOiJ1c2VyIiwidXNlcl9pZCI6Mn0.52MWTM7DnouukIVwtN6BXbFlv9IS8J-gnVQKnX7Qkm0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"booking_id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://sagara-booking-api-f264e78236b6.herokuapp.com/api/payments",
+							"protocol": "https",
+							"host": [
+								"sagara-booking-api-f264e78236b6",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"payments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
