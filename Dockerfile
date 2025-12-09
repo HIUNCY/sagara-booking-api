@@ -1,21 +1,29 @@
+# ---- Build stage ----
 FROM golang:1.21-alpine AS builder
 
 WORKDIR /app
 
+RUN apk add --no-cache git ca-certificates && update-ca-certificates
+
 COPY go.mod go.sum ./
-RUN go mod download
+RUN go mod download && go mod verify
 
 COPY . .
 
-RUN go build -o main ./cmd/api/main.go
+ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64
+RUN go build -ldflags="-s -w" -o /app/bin/api ./cmd/api/main.go
 
-FROM alpine:latest
+# ---- Runtime stage ----
+FROM alpine:3.20
 
-WORKDIR /root/
+RUN apk add --no-cache ca-certificates && update-ca-certificates
 
-COPY --from=builder /app/main .
-COPY --from=builder /app/.env .
+WORKDIR /app
 
-EXPOSE 3000
+COPY --from=builder /app/bin/api ./api
 
-CMD ["./main"]
+EXPOSE 8080
+
+ENV PORT=8080
+
+CMD ["./api"]
