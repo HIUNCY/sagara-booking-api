@@ -29,19 +29,19 @@ You can use these credentials to test Role-Based Access Control (RBAC):
 
 ## ✨ Key Features
 
-### 1. Authentication & Authorization [cite: 8-11]
+### 1. Authentication & Authorization
 * **JWT Implementation:** Secure login with Bearer Token.
 * **RBAC Middleware:** Strict separation between `admin` and `user` capabilities.
 
-### 2. Field Management (CRUD) [cite: 15-20]
+### 2. Field Management (CRUD)
 * **Admin:** Full access to Create, Update, and Delete sports fields.
 * **Public:** Users can view the list of available fields.
 
-### 3. Booking System (Core Logic) [cite: 30-39]
+### 3. Booking System (Core Logic)
 * **Overlap Validation:** The system strictly prevents double booking. It checks if a requested time slot overlaps with any existing booking for the specific field.
 * **Status Management:** Default status is `pending`.
 
-### 4. Payment (Bonus Feature) [cite: 40-44]
+### 4. Payment (Bonus Feature)
 * Mock endpoint to update booking status from `pending` to `paid`.
 
 ### 5. Clean Architecture
